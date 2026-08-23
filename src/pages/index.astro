@@ -1,5 +1,15 @@
 ---
+import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+let entries = await getCollection("homepage");
+let sortedEntries = entries.sort((a, b) => a.data.index - b.data.index);
+let renderedEntries = await Promise.all(
+  sortedEntries.map(async entry => {
+    let { Content } = await render(entry);
+    return { entry, Content };
+  })
+);
 ---
 
 <BaseLayout>
@@ -16,22 +26,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 			</div>
 		</div>
 	</div>
-	<div class="w3-row">
-		<div class="w3-half w3-pale-blue w3-padding-large">
-			<div class="w3-xlarge">
-				Background
+	{Array.from({ length: Math.ceil(renderedEntries.length / 2) }, (_, row) => {
+		const entries = renderedEntries.slice(row * 2, row * 2 + 2);
+
+		return (
+			<div class="w3-row" style="display: flex; flex-wrap: wrap;">
+				{entries.map(({ entry, Content }, i) => {
+					const color = ["blue", "yellow", "green"][(row * 2 + i) % 3];
+
+					return <div class={`w3-half w3-padding-large w3-pale-${color}`}>
+						<h2>{entry.data.title}</h2>
+						<Content />
+					</div>
+				})}
 			</div>
-			<p>
-				Blue, clearly!
-			</p>
-		</div>
-		<div class="w3-half w3-pale-yellow w3-padding-large">
-			<div class="w3-xlarge">
-				Stuff I do
-			</div>
-			<p>
-				TODO
-			</p>
-		</div>
-	</div>
+		);
+	})}
 </BaseLayout>
