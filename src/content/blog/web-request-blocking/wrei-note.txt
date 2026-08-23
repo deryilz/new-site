@@ -1,0 +1,16 @@
+As you can see from line 66, the binding scripts are very careful about pages hooking into them. After a lot of time trying, I was not able to get access to the actual WebRequestEventImpl function. Since such a simple constructor leak (which I'll describe later) exists, it makes me think that it might be intentional (?) and I don't understand why. The exposed constructor was never actually patched in the bug fix, either.
+
+Anyway, I wanted to note that you can ALMOST get the function using the V8 Stack Trace API:
+
+```
+
+Error.prepareStackTrace = (a, b) => {
+    window.leakedThis = b[0].getThis()
+    window.leakedFunction = b[0].getFunction()
+}
+
+```
+
+Then, when you call WebRequestEvent with a non-string event name, an error (line 55) would be thrown and stuff would get leaked.
+
+However, a pesky "use strict" prevents us from doing this. So close!

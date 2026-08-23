@@ -1,0 +1,23 @@
+---
+const {
+  title = "Derin Eryilmaz",
+  description = "Hello, I'm Derin!",
+} = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{title}</title>
+    <link rel="icon" href="/icon.png" />
+    <meta name="title" content="{title}" />
+    <meta name="description" content="{description}" />
+
+    <link rel="stylesheet" href="/w3.css" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page not found">
+	<div class="w3-panel w3-padding-large">
+		<h1 class="w3-jumbo">Page not found!</h1>
+		{["purple", "teal", "pink"].map(color =>
+			<a class={`w3-btn w3-large w3-ripple w3-margin-right w3-${color}`} href="/">Home</a>
+		)}
+	</div>
+</BaseLayout>

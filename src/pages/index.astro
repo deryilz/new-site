@@ -1,17 +1,37 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+	<div class="w3-container w3-pale-red w3-padding-32">
+		<div class="w3-panel w3-center">
+			<h1 class="w3-jumbo">Derin Eryilmaz</h1>
+			<div class="w3-xlarge">I like to generally just mess around</div>
+		</div>
+		<div class="w3-panel">
+			<div class="w3-flex" style="gap: 20px; justify-content: center;">
+				<a class="w3-btn w3-large w3-ripple w3-purple" href="/blog">Blog</a>
+				<a class="w3-btn w3-large w3-ripple w3-teal" href="https://github.com/deryilz">GitHub</a>
+				<a class="w3-btn w3-large w3-ripple w3-pink" href="https://x.com/deryilz">Twitter</a>
+			</div>
+		</div>
+	</div>
+	<div class="w3-row">
+		<div class="w3-half w3-pale-blue w3-padding-large">
+			<div class="w3-xlarge">
+				Background
+			</div>
+			<p>
+				Blue, clearly!
+			</p>
+		</div>
+		<div class="w3-half w3-pale-yellow w3-padding-large">
+			<div class="w3-xlarge">
+				Stuff I do
+			</div>
+			<p>
+				TODO
+			</p>
+		</div>
+	</div>
+</BaseLayout>

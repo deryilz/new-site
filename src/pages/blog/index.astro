@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostList from "../../layouts/PostList.astro";
+
+let posts = await getCollection("blog");
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<BaseLayout title="Derin's blog">
+    <div class="w3-flex w3-padding-16" style="justify-content: center;">
+        <div class="w3-threequarter">
+            <div class="w3-panel w3-padding-32">
+                <h1 class="w3-xxxlarge">Derin's Blog</h1>
+                <a href="/" class="w3-button w3-light-gray">Back home</a>
+            </div>
+            <PostList posts={posts}></PostList>
+        </div>
+    </div>
+</BaseLayout>

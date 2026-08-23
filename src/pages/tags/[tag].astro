@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostList from "../../layouts/PostList.astro";
+
+export async function getStaticPaths() {
+  let allPosts = await getCollection("blog");
+
+  let uniqueTags = Array.from(new Set(allPosts.flatMap(post => post.data.tags)));
+  return uniqueTags.map((tag) => {
+    let filteredPosts = allPosts
+      .filter((post) => post.data.tags.includes(tag))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+let { tag } = Astro.params;
+let { posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`Posts tagged with #${tag}`}
+  description={`All blog posts tagged with #${tag}`}
+>
+    <div class="w3-flex w3-padding-16" style="justify-content: center;">
+        <div class="w3-threequarter">
+            <div class="w3-panel">
+                <a href="/" class="w3-button w3-light-gray">Derin Eryilmaz</a>
+                <h1 class="w3-margin-top">
+                    Posts tagged with
+                    <span class="w3-tag w3-asphalt">{tag}</span>
+                </h1>
+            </div>
+            <hr>
+            <PostList posts={posts}></PostList>
+        </div>
+    </div>
+</BaseLayout>

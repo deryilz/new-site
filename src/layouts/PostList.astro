@@ -1,0 +1,23 @@
+---
+const { posts } = Astro.props;
+---
+
+{posts.map((post, i) =>
+    <>
+    <div class="w3-panel w3-padding-16">
+        <a
+            href={`/blog/${post.id}/`}
+            class="w3-block w3-xlarge w3-block w3-hover-text-purple"
+        >
+            {post.data.title}
+        </a>
+        <div class="w3-large">
+            {post.data.description}
+        </div>
+        <div class="w3-text-gray">
+            {post.data.date.toLocaleDateString()}
+        </div>
+    </div>
+    {i < posts.length - 1 && <hr>}
+    </>
+)}
